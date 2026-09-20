@@ -4,8 +4,8 @@ export const ButtonDelete = ({ onClick }) => {
   return (
     <button
       onClick={onClick}
-      className="inline-flex items-center justify-center w-9 h-9 rounded-lg border border-gray-200 dark:border-gray-600 bg-transparent 
-       text-gray-500 hover:bg-red-50 hover:cursor-pointer dark:hover:bg-red-900/20 hover:text-red-600 hover:border-red-200 active:scale-95 transition-all duration-150"
+      className="inline-flex items-center justify-center w-9 h-9 rounded-lg border border-gray-200 dark:border-gray-600 
+        bg-red-50 hover:cursor-pointer dark:hover:bg-red-900/20 text-red-600 border-red-200 active:scale-95 transition-all duration-150"
     >
       <svg
         width="18"

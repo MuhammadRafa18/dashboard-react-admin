@@ -13,6 +13,8 @@ import { Home } from '../Pages/Home'
 import { About } from '../Pages/About'
 import { Faq } from '../Pages/Faq'
 import { DetailFaq } from '../Pages/DetailFaq'
+import { ShippingZone } from '../Pages/ShippingZone'
+import { Shipping } from '../Pages/Shipping'
 import { Login } from '../Pages/auth/Login'
 import { RouteSuperAdmin } from './RouteSuperAdmin'
 import { AuthContext } from '../Store/AuthContext'
@@ -34,6 +36,8 @@ export const MainRoute = () => {
         <Route path='/About' element={ <PrivateRoute><About/> </PrivateRoute> } />
         <Route path='/Faq' element={ <PrivateRoute><Faq/></PrivateRoute>  } />
         <Route path='/DetailFaq' element={ <PrivateRoute><DetailFaq/></PrivateRoute>  } />
+        <Route path='/ShippingZone' element={ <PrivateRoute><ShippingZone/></PrivateRoute>  } />
+        <Route path='/Shipping' element={ <PrivateRoute><Shipping/></PrivateRoute>  } />
       </Route>
 
         

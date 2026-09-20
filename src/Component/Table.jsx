@@ -25,13 +25,13 @@ export const Table = ({ colums, Data, filters, page, setPage }) => {
   return (
     <div className="w-full rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 overflow-hidden shadow-sm">
       {filters?.length > 0 && (
-        <div className="flex items-center gap-2 px-4 py-3 border-b border-gray-100 dark:border-gray-700 flex-wrap">
+        <div className="flex items-center gap-2 px-8 py-6 border-b border-gray-100 dark:border-gray-700 flex-wrap">
           <input
             type="text"
-            placeholder="Cari..."
+            placeholder="title..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className="flex-1 min-w-36 text-sm px-3 py-1.5 rounded-lg border border-gray-200 dark:border-gray-600 bg-transparent focus:outline-none focus:border-gray-400"
+            className="flex-1 min-w-36 text-sm px-3 py-1.5 rounded-lg  border border-gray-300 dark:border-gray-600 bg-transparent focus:outline-none focus:border-gray-400 placeholder:text-gray-400 dark:placeholder:text-gray-500"
           />
           {["all", ...filters].map((f) => (
             <button
@@ -54,7 +54,7 @@ export const Table = ({ colums, Data, filters, page, setPage }) => {
       )}
 
       {/* Table */}
-      <div className="w-full overflow-x-auto">
+      <div className="w-full overflow-x-auto ">
         <table className="w-full text-sm">
           <thead>
             <tr className="bg-gray-50 dark:bg-gray-700 border-b border-gray-100 dark:border-gray-600">

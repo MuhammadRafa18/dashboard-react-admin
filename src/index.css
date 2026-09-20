@@ -1,28 +1,29 @@
 @import "tailwindcss";
 @plugin "daisyui";
-@plugin "flowbite/plugin";
-@source "../.flowbite-react/class-list.json";
 
 @theme {
-  --font-sans: "Sora", "sans-serif";
-  --color-gray-text: #7a7a7a;
-  --color-bg-card: #fcfbf9;
-  --color-gray-secondbackground: #fdfdfd;
-  --color-gray-line: #d8dbdb;
-  --color-button: #44405480;
-  --color-hover: #fe942a;
-  --color-sidebar: #fafafa;
-  --color-neutral-primary-soft: #ffffff;
-  --color-neutral-secondary-medium: #f9fafb;
-  --color-default-medium: #e5e7eb;
-  --color-heading: #111827;
-  --color-body: #6b7280;
-  --shadow-xl-full: 0 0 20px rgba(0, 0, 0, 0.25);
-  --shadow-normal-full: 0 0 6px rgba(0, 0, 0, 0.1);
+  --font-sans: "Sora", sans-serif;
+  
+  /* Color Palette - Clean & Professional */
+  --color-primary: #FE942A; /* Orange accent */
+  --color-primary-hover: #E58526;
+  
+  --color-bg-main: #F9FAFB; /* Gray 50 - Background utama */
+  --color-bg-surface: #FFFFFF; /* White - Untuk Card, Sidebar, Navbar */
+  
+  --color-text-heading: #111827; /* Gray 900 - H1, H2 */
+  --color-text-body: #4B5563; /* Gray 600 - Paragraf, Label */
+  --color-text-muted: #9CA3AF; /* Gray 400 - Placeholder, Icon */
+  
+  --color-border-light: #F3F4F6; /* Gray 100 */
 }
 
 body {
-  @apply font-sans;
+  @apply font-sans bg-bg-main text-text-body;
+}
+
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
 }
 .hide-scrollbar {
   -ms-overflow-style: none;

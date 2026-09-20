@@ -11,8 +11,8 @@ import { Modal } from "../Component/Modal";
 import { FormType } from "../Form/FormType";
 
 export const Type = () => {
-    const [page, setPage] = useState(1);
-  const { Data, refetch } = UseFecth(`/SkinTypes?page=${page}`);
+  const [page, setPage] = useState(1);
+  const { Data, refetch } = UseFecth(`/skin-types?page=${page}`);
   const { isOpen, setIsOpen, selectedData, setSelectedData } =
     useContext(PagesContext);
   const { HandleUpdate, HandleDelete } = UseAction();
@@ -26,13 +26,41 @@ export const Type = () => {
     {
       key: "image",
       label: "Image",
-      render: (item) => (
-        <img
-          src={`http://localhost:8000/storage/${item.image}` ?? "-"}
-          alt=""
-          className="w-10 mx-auto"
-        />
-      ),
+      render: (item) => {
+        if (!item.image) {
+          return (
+            <div className="flex justify-center">
+              <div className="w-10 h-10 rounded-lg bg-gray-50 border border-gray-200 flex items-center justify-center">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="w-5 h-5 text-gray-400"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  strokeWidth={1.5}
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M3 7a2 2 0 012-2h3l2-2h4l2 2h3a2 2 0 012 2v10a2 2 0 01-2 2H5a2 2 0 01-2-2V7z"
+                  />
+                  <circle cx="12" cy="12" r="3" />
+                </svg>
+              </div>
+            </div>
+          );
+        }
+
+        return (
+          <div className="flex justify-center">
+            <img
+              src={`${import.meta.env.VITE_STORAGE_URL}/${item.image}`}
+              alt={item.title || "Product"}
+              className="w-10 h-10 rounded-lg object-cover border border-gray-200"
+            />
+          </div>
+        );
+      },
     },
     {
       key: "Actions",
@@ -46,7 +74,7 @@ export const Type = () => {
             }}
           />
           <ButtonDelete
-            onClick={() => HandleDelete(`admin/SkinTypes`, item.id, refetch)}
+            onClick={() => HandleDelete(`admin/skin-types`, item.id, refetch)}
           />
         </div>
       ),
@@ -61,7 +89,7 @@ export const Type = () => {
           setIsOpen(true);
         }}
       />
-      <Table colums={colums} Data={Data} page={page} setPage={setPage}/>
+      <Table colums={colums} Data={Data} page={page} setPage={setPage} />
       <Modal
         isOpen={isOpen}
         onClose={() => setIsOpen(false)}

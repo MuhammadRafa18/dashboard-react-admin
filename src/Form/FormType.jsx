@@ -28,7 +28,7 @@ export const FormType = ({ data, onSuccess, onClose }) => {
       if (Object.values(errors).some(Boolean)) return;
     }
     await handleSubmit({
-      endpoint: "/admin/SkinTypes",
+      endpoint: "/admin/skin-types",
       data: skintype,
       files: files,
       id: data?.id ?? null,

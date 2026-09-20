@@ -13,7 +13,8 @@ import { FormCategories } from "../Form/FormCategories";
 export const Categories = () => {
   const [page, setPage] = useState(1);
   const { Data, refetch } = UseFecth(`/category?page=${page}`);
-  const { isOpen, setIsOpen, selectedData, setSelectedData } =
+  const { isOpen, setIsOpen, selectedData, setSelectedData,
+     showConfirmModal, setShowConfirmModal, selectedItem, setSelectedItem,toggleConfig, setToggleConfig } =
     useContext(PagesContext);
   const { HandleUpdate, HandleDelete, HandleToggle } = UseAction();
   const colums = [
@@ -30,8 +31,20 @@ export const Categories = () => {
       render: (item) => (
         <ButtonToggle
           isActive={item.is_active}
-          onClick={() =>
+          onClick={() => {
+            if (item.is_active) {
+              setSelectedItem(item);
+              setToggleConfig({
+                endpoint: "/admin/category",
+                id: item.id,
+                isActive: item.is_active,
+                refetch: refetch,
+              });
+              setShowConfirmModal(true);
+              return;
+            }
             HandleToggle(`/admin/category`, item.id, item.is_active, refetch)
+          }
           }
         />
       ),

@@ -54,7 +54,7 @@ export const FormProduk = ({ data, onSuccess, onClose }) => {
       if (Object.values(errors).some(Boolean)) return;
     }
     await handleSubmit({
-      endpoint: "/admin/product",
+      endpoint: "/admin/products",
       data: form,
       files: files,
       skin_types: {

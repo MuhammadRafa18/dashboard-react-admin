@@ -5,13 +5,16 @@ export const PagesContext = createContext();
 export const PagesProvider = ({ children }) => {
   const [Banner, setBanner] = useState({});
   const [VisiMisi, setVisiMisi] = useState({});
+  const [showConfirmModal, setShowConfirmModal] = useState(false);
+  const [selectedItem, setSelectedItem] = useState(null);
+  const [toggleConfig, setToggleConfig] = useState(null);
 
   const [ParagrafAbout, setParagrafAbout] = useState({});
   const [Result, setResult] = useState([]);
   const [Power, setPower] = useState({});
 
   const [Faq, setFaq] = useState({});
-  const [isSidebarOpen, setIsSidebarOpen] = useState(true);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(true); // State untuk mengontrol sidebar
   const [isOpen, setIsOpen] = useState(false);
   const [selectedData, setSelectedData] = useState(null);
 
@@ -36,6 +39,9 @@ export const PagesProvider = ({ children }) => {
         setIsSidebarOpen,
         Result,
         setResult,
+        showConfirmModal, setShowConfirmModal,
+        selectedItem, setSelectedItem,
+        toggleConfig,setToggleConfig 
       }}
     >
       {children}

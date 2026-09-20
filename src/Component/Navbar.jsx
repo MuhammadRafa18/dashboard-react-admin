@@ -1,12 +1,12 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
+import { Menu, User as UserIcon, LogOut } from "lucide-react"; 
 import profil from "../assets/profil.jpg";
-import city from "../assets/city.jpg";
 import { AuthContext } from "../Store/AuthContext";
 import { PagesContext } from "../Store/PagesProvider";
 
 export const Navbar = () => {
   const { logout, User } = useContext(AuthContext);
-  const { isSidebarOpen, setIsSidebarOpen } = useContext(PagesContext);
+    const { isSidebarOpen, setIsSidebarOpen } = useContext(PagesContext);
   const [openMenu, setOpenMenu] = useState(false);
   const menuRef = useRef(null);
 
@@ -19,92 +19,63 @@ export const Navbar = () => {
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
+
   const handleLogout = () => {
     if (window.confirm("Mau log out?")) {
       logout();
     }
   };
-  return (
-    <>
-      <header className=" relative z-50">
-        <div className="px-10 py-6 flex justify-between items-center shadow-lg">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-            onClick={() => setIsSidebarOpen(!isSidebarOpen)}
-            className="cursor-pointer"
-          >
-            <path
-              fill="#000"
-              d="M4 18q-.425 0-.712-.288T3 17t.288-.712T4 16h16q.425 0 .713.288T21 17t-.288.713T20 18zm0-5q-.425 0-.712-.288T3 12t.288-.712T4 11h16q.425 0 .713.288T21 12t-.288.713T20 13zm0-5q-.425 0-.712-.288T3 7t.288-.712T4 6h16q.425 0 .713.288T21 7t-.288.713T20 8z"
-            />
-          </svg>
+  const userName = User?.name || "Admin";
+  const userRole = User?.role || "Super Admin";
+  const userAvatar = User?.avatar || profil; 
 
-          <div className="flex items-center space-x-4 ">
-            <div
-              className="relative  cursor-pointer"
-              ref={menuRef}
-              onClick={() => setOpenMenu(!openMenu)}
-            >
-              <div className="flex  items-center space-x-3">
-                <img
-                  src={profil}
-                  alt="account"
-                  className="w-8 rounded cursor-pointer"
-                />
-                <div className="flex flex-col text-xs">
-                  <span className="font-semibold">{User?.name}</span>
-                  <span>{User?.role}</span>
-                </div>
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="20"
-                  height="20"
-                  viewBox="0 0 24 24"
-                  className="rotate-90"
-                >
-                  <path
-                    fill="none"
-                    stroke="#000"
-                    strokeWidth="2"
-                    d="m9 6l6 6l-6 6"
-                  />
-                </svg>
+  return (
+    <header className="bg-bg-surface border-b border-border-light z-30 sticky top-0">
+      <div className="px-4 md:px-8 h-16 flex justify-between md:justify-end items-center">
+
+        {/* Hamburger Icon */}
+        <button
+          onClick={() => setIsSidebarOpen((!isSidebarOpen))} 
+          className="p-2 hover:bg-gray-100 rounded-lg text-text-heading cursor-pointer md:hidden"
+        >
+          <Menu size={24} />
+        </button>
+
+        {/* Profile Section */}
+        <div className="relative" ref={menuRef}>
+          <button
+            onClick={() => setOpenMenu(!openMenu)}
+            className="flex items-center space-x-3 p-1.5 rounded-lg hover:bg-gray-50 transition border border-transparent hover:border-gray-200"
+          >
+            <img src={userAvatar} alt="Profile" className="w-8 h-8 rounded-full object-cover" />
+            <div className="hidden md:flex flex-col text-left">
+              <span className="text-sm font-semibold text-text-heading leading-tight">{userName}</span>
+              <span className="text-xs text-text-muted">{userRole}</span>
+            </div>
+          </button>
+
+          {/* Clean Dropdown */}
+          {openMenu && (
+            <div className="absolute right-0 mt-2 w-56 bg-bg-surface border border-border-light rounded-xl shadow-[0_4px_20px_rgba(0,0,0,0.05)] py-2 animate-in fade-in zoom-in-95 duration-200">
+              <div className="px-4 py-3 border-b border-border-light md:hidden">
+                <p className="text-sm font-semibold text-text-heading">{userName}</p>
+                <p className="text-xs text-text-muted">{userRole}</p>
               </div>
 
-              {openMenu && (
-                <div
-                  className="w-[352px] h-[90px] flex items-center justify-between  p-4  absolute top-9  -translate-x-1/2 
-                  text-gray-800 rounded-xl shadow-lg   animate-fadeIn"
-                  style={{
-                    backgroundImage: `linear-gradient(to right, rgba(14, 165, 233, 0.6), rgba(14, 165, 233, 0.6)), url(${city})`,
-                  }}
-                >
-                  <div className="flex items-start space-x-2 text-white  ">
-                    <img
-                      src={profil}
-                      alt="account"
-                      className="w-8 rounded-full cursor-pointer"
-                    />
-                    <div className="text-xs">
-                      <span className="font-semibold">Rafa</span>
-                      <span>{User?.role}</span>
-                    </div>
-                  </div>
-                  <button
-                    onClick={handleLogout}
-                    className="px-4 py-2 font-semibold text-center text-xs text-white rounded-full  bg-gray-600   transition cursor-pointer"
-                  >
-                    Logout
-                  </button>
-                </div>
-              )}
+              <button className="w-full flex items-center px-4 py-2 text-sm text-text-body hover:bg-gray-50 hover:text-primary transition">
+                <UserIcon size={16} className="mr-3" /> Profile Saya
+              </button>
+
+              <button
+                onClick={handleLogout} // Hubungkan fungsi handleLogout
+                className="w-full flex items-center px-4 py-2 text-sm text-red-600 hover:bg-red-50 transition mt-1"
+              >
+                <LogOut size={16} className="mr-3" /> Logout
+              </button>
             </div>
-          </div>
+          )}
         </div>
-      </header>
-    </>
+      </div>
+    </header>
   );
 };

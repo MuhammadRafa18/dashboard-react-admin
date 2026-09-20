@@ -4,8 +4,8 @@ export const ButtonUpdate = ({ onClick }) => {
   return (
     <button
       onClick={onClick}
-      className="inline-flex items-center justify-center w-9 h-9 rounded-lg border border-gray-200 dark:border-gray-600 bg-transparent text-gray-500 
-      hover:bg-gray-50 hover:cursor-pointer dark:hover:bg-red-900/20 hover:text-green-600 hover:border-green-200 active:scale-95 transition-all duration-150"
+      className="inline-flex items-center justify-center w-9 h-9 rounded-lg border border-gray-200 dark:border-gray-600 bg-transparent 
+       hover:cursor-pointer dark:hover:bg-red-900/20 text-green-600 border-green-200 active:scale-95 transition-all duration-150"
     >
       <svg
         width="18"
