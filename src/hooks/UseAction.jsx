@@ -147,5 +147,19 @@ export const UseAction = () => {
       setLoading(false);
     }
   };
-  return { HandleUpdate, HandleDelete, HandleToggle, handleSubmit };
+  const HandleStatus = async (endpoint, id, data, refetch) => {
+    if (loading) return;
+    setLoading(true);
+
+    try {
+      await axiosInstance.patch(`${endpoint}/${id}`, data);
+      toast.success("Successfully Update Status!");
+      refetch?.();
+    } catch (err) {
+      toast.error(err.response?.data?.message || "Failed to Update Status");
+    } finally {
+      setLoading(false);
+    }
+  };
+  return { HandleUpdate, HandleDelete, HandleToggle, HandleStatus, handleSubmit };
 };

@@ -17,6 +17,8 @@ export const PagesProvider = ({ children }) => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true); // State untuk mengontrol sidebar
   const [isOpen, setIsOpen] = useState(false);
   const [selectedData, setSelectedData] = useState(null);
+  // Current page info for breadcrumb and header
+  const [currentPage, setCurrentPage] = useState({ title: "Home", description: "" });
 
   return (
     <PagesContext.Provider
@@ -41,7 +43,9 @@ export const PagesProvider = ({ children }) => {
         setResult,
         showConfirmModal, setShowConfirmModal,
         selectedItem, setSelectedItem,
-        toggleConfig,setToggleConfig 
+        toggleConfig,setToggleConfig,
+        // Breadcrumb / current page
+        currentPage, setCurrentPage
       }}
     >
       {children}

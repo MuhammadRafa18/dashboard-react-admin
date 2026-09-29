@@ -9,12 +9,14 @@ import { PagesContext } from "../Store/PagesProvider";
 import { useContext, useState } from "react";
 import { Modal } from "../Component/Modal";
 import { FormCategories } from "../Form/FormCategories";
+import { UsePageMeta } from "../hooks/UsePageMeta";
 
 export const Categories = () => {
+  UsePageMeta("Categories", "Kelola kategori untuk mengelompokkan produk di toko.");
   const [page, setPage] = useState(1);
   const { Data, refetch } = UseFecth(`/category?page=${page}`);
   const { isOpen, setIsOpen, selectedData, setSelectedData,
-     showConfirmModal, setShowConfirmModal, selectedItem, setSelectedItem,toggleConfig, setToggleConfig } =
+     showConfirmModal, setShowConfirmModal, selectedItem, setSelectedItem,toggleConfig, setToggleConfig,currentPage } =
     useContext(PagesContext);
   const { HandleUpdate, HandleDelete, HandleToggle } = UseAction();
   const colums = [
@@ -69,6 +71,13 @@ export const Categories = () => {
   ];
   return (
     <div className="flex flex-col items-end space-y-4 md:space-y-6 lg:space-y-8 py-8 relative overflow-x-auto">
+      <div className="flex w-full flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+       <div className="min-w-0">
+          <h1 className="text-2xl font-semibold text-gray-900">{currentPage.title}</h1>
+          {currentPage.description && (
+            <p className="mt-1 max-w-2xl text-sm text-gray-500">{currentPage.description}</p>
+          )}
+        </div>
       <ButtonCreate
         text={"Create Category"}
         onClick={() => {
@@ -76,6 +85,7 @@ export const Categories = () => {
           setIsOpen(true);
         }}
       />
+      </div>
       <Table colums={colums} Data={Data} page={page} setPage={setPage} />
       <Modal
         isOpen={isOpen}

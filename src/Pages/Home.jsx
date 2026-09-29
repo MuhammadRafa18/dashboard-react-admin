@@ -4,11 +4,15 @@ import axios from "axios";
 
 import { CategoryCart } from "../Component/CategoryCart";
 import { Card } from "../Component/Card";
+import { UsePageMeta } from "../hooks/UsePageMeta";
+import { PagesContext } from "../Store/PagesProvider";
 
 
 export const Home = () => {
-  
+  UsePageMeta("Dashboard", "Ringkasan performa toko, pesanan terbaru, dan statistik pengguna.");
+
   const api = import.meta.env.VITE_API;
+  const { currentPage } = useContext(PagesContext);
   const { token } = useContext(AuthContext);
   const [stats, setStats] = useState({
     totalOrders: 0,
@@ -51,10 +55,15 @@ export const Home = () => {
 
     fetchData();
   }, []);
-  
+
   return (
-    <div className="p-6  min-h-screen">
-      <h1 className="text-2xl font-bold mb-6 text-gray-800">Dashboard</h1>
+    <div className="flex flex-col p-6 gap-4 min-h-screen">
+      <div className="min-w-0">
+        <h1 className="text-2xl font-semibold text-gray-900">{currentPage.title}</h1>
+        {currentPage.description && (
+          <p className="mt-1 max-w-2xl text-sm text-gray-500">{currentPage.description}</p>
+        )}
+      </div>
       <div className="flex items-start space-x-6">
         <Card
           icon={
@@ -143,7 +152,7 @@ export const Home = () => {
           persentase={`+3.34%`}
           view="Last Week"
         />
-        <CategoryCart/>
+        <CategoryCart />
       </div>
     </div>
   );

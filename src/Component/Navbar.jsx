@@ -1,14 +1,24 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
-import { Menu, User as UserIcon, LogOut } from "lucide-react"; 
+import { Menu, User as UserIcon, LogOut } from "lucide-react";
 import profil from "../assets/profil.jpg";
 import { AuthContext } from "../Store/AuthContext";
 import { PagesContext } from "../Store/PagesProvider";
+import { Link, useLocation } from "react-router";
 
 export const Navbar = () => {
   const { logout, User } = useContext(AuthContext);
-    const { isSidebarOpen, setIsSidebarOpen } = useContext(PagesContext);
+  const { isSidebarOpen, setIsSidebarOpen, currentPage } = useContext(PagesContext);
   const [openMenu, setOpenMenu] = useState(false);
   const menuRef = useRef(null);
+  const location = useLocation();
+  const pathname = location?.pathname || "/";
+
+  const deriveTitle = () => {
+    if (currentPage && currentPage.title) return currentPage.title;
+    const parts = pathname.split("/").filter(Boolean);
+    if (!parts.length) return "Home";
+    return parts.map(p => p.charAt(0).toUpperCase() + p.slice(1)).join(" / ");
+  };
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -27,25 +37,33 @@ export const Navbar = () => {
   };
   const userName = User?.name || "Admin";
   const userRole = User?.role || "Super Admin";
-  const userAvatar = User?.avatar || profil; 
+  const userAvatar = User?.avatar || profil;
 
   return (
     <header className="bg-bg-surface border-b border-border-light z-30 sticky top-0">
-      <div className="px-4 md:px-8 h-16 flex justify-between md:justify-end items-center">
+      <div className="px-4 md:px-8 h-16 flex justify-between  items-center">
+        <div className="flex items-center space-x-1">
+          {/* Hamburger Icon */}
+          <button
+            onClick={() => setIsSidebarOpen((!isSidebarOpen))}
+            className="p-2 hover:bg-gray-100 rounded-lg text-text-heading cursor-pointer md:hidden"
+          >
+            <Menu size={24} />
+          </button>
 
-        {/* Hamburger Icon */}
-        <button
-          onClick={() => setIsSidebarOpen((!isSidebarOpen))} 
-          className="p-2 hover:bg-gray-100 rounded-lg text-text-heading cursor-pointer md:hidden"
-        >
-          <Menu size={24} />
-        </button>
+          {/* Breadcrumb (hidden on small screens) */}
+          <div className="flex items-center space-x-2 ">
+            <Link to="/" className="text-sm text-text-muted hover:underline">Home</Link>
+            <span className="text-sm text-text-muted">/</span>
+            <span className="text-sm font-semibold text-text-heading">{deriveTitle()}</span>
+          </div>
+        </div>
 
         {/* Profile Section */}
         <div className="relative" ref={menuRef}>
           <button
             onClick={() => setOpenMenu(!openMenu)}
-            className="flex items-center space-x-3 p-1.5 rounded-lg hover:bg-gray-50 transition border border-transparent hover:border-gray-200"
+            className="flex items-center space-x-3 p-1.5 rounded-lg hover:bg-gray-50 transition border border-transparent hover:border-gray-200 hover:cursor-pointer"
           >
             <img src={userAvatar} alt="Profile" className="w-8 h-8 rounded-full object-cover" />
             <div className="hidden md:flex flex-col text-left">

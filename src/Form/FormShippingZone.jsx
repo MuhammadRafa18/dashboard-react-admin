@@ -9,11 +9,10 @@ export const FormShippingZone = ({ data, onSuccess, onClose }) => {
     name: data?.name ?? "",
     price: data?.price ?? "",
   });
-
   const handleSubmitForm = async (event) => {
     event.preventDefault();
     await handleSubmit({
-      endpoint: "/admin/zoneRegion",
+      endpoint: "/admin/shippingZone",
       data: shippingZone,
       id: data?.id ?? null,
       onSuccess: () => {

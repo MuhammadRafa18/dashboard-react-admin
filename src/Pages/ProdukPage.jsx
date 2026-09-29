@@ -9,13 +9,15 @@ import { Modal } from "../Component/Modal";
 import { FormProduk } from "../Form/FormProduk";
 import { ButtonCreate } from "../Component/ButtonCreate";
 import { PagesContext } from "../Store/PagesProvider";
+import { UsePageMeta } from "../hooks/UsePageMeta";
 
 export const ProdukPage = () => {
+  UsePageMeta("Produk", "Kelola katalog produk, harga, stok, dan informasi produk yang ditampilkan di toko.");
   const [page, setPage] = useState(1);
   const { Data, refetch } = UseFecth(`/products?page=${page}`);
   const { HandleDelete, HandleToggle } = UseAction();
   const { isOpen, setIsOpen, selectedData, setSelectedData, showConfirmModal,
-    setShowConfirmModal, selectedItem, setSelectedItem, toggleConfig, setToggleConfig } =
+    setShowConfirmModal, selectedItem, setSelectedItem, toggleConfig, setToggleConfig,currentPage } =
     useContext(PagesContext);
   const colums = [
     {
@@ -133,13 +135,21 @@ export const ProdukPage = () => {
   return (
 
     <div className="flex flex-col items-end space-y-4 md:space-y-6 lg:space-y-8 py-8 relative overflow-x-auto">
-      <ButtonCreate
-        onClick={() => {
-          setSelectedData(null);
-          setIsOpen(true);
-        }}
-        text={"Create Product"}
-      />
+      <div className="flex w-full flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+        <div className="min-w-0">
+          <h1 className="text-2xl font-semibold text-gray-900">{currentPage.title}</h1>
+          {currentPage.description && (
+            <p className="mt-1 max-w-2xl text-sm text-gray-500">{currentPage.description}</p>
+          )}
+        </div>
+        <ButtonCreate
+          onClick={() => {
+            setSelectedData(null);
+            setIsOpen(true);
+          }}
+          text={"Create Product"}
+        />
+      </div>
 
       <Table
         colums={colums}

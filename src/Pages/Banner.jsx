@@ -9,12 +9,14 @@ import { ButtonCreate } from "../Component/ButtonCreate";
 import { Table } from "../Component/Table";
 import { Modal } from "../Component/Modal";
 import { FormBanner } from "../Form/FormBanner";
+import { UsePageMeta } from "../hooks/UsePageMeta";
 
 export const Banner = () => {
-  const { isOpen, setIsOpen, selectedData, setSelectedData } =
+  UsePageMeta("Banner", "Kelola banner promosi yang ditampilkan di halaman toko.");
+  const { isOpen, setIsOpen, selectedData, setSelectedData, currentPage } =
     useContext(PagesContext);
   const { Data, refetch } = UseFecth(`/banner`);
- 
+
   const { HandleDelete } = UseAction();
   const colums = [
     {
@@ -53,14 +55,22 @@ export const Banner = () => {
   ];
 
   return (
-    <div className="flex flex-col items-end space-y-4 md:space-y-6 lg:space-y-8 py-8 relative overflow-x-auto">
-      <ButtonCreate
-        text={"Create Banner"}
-        onClick={() => {
-          setSelectedData(null);
-          setIsOpen(true);
-        }}
-      ></ButtonCreate>
+    <div className="relative flex flex-col space-y-4 overflow-x-auto py-8 md:space-y-6 lg:space-y-8">
+      <div className="flex w-full flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+        <div className="min-w-0">
+          <h1 className="text-2xl font-semibold text-gray-900">{currentPage.title}</h1>
+          {currentPage.description && (
+            <p className="mt-1 max-w-2xl text-sm text-gray-500">{currentPage.description}</p>
+          )}
+        </div>
+        <ButtonCreate
+          text="Create Banner"
+          onClick={() => {
+            setSelectedData(null);
+            setIsOpen(true);
+          }}
+        />
+      </div>
       <Table colums={colums} Data={Data}></Table>
       <Modal
         isOpen={isOpen}

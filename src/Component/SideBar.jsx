@@ -2,10 +2,11 @@ import React, { useContext, useState } from "react";
 import { AuthContext } from "../Store/AuthContext";
 import { Link, useLocation, useNavigate } from "react-router";
 import { PagesContext } from "../Store/PagesProvider";
-import { LayoutDashboard, Database, Home, HelpCircle, Info, ChevronDown } from "lucide-react";
+import { LayoutDashboard, Database, Home, HelpCircle, Info, ChevronDown, ShoppingCart } from "lucide-react";
 
 const MENU_ITEMS = [
   { title: "Dashboard", path: "/", icon: LayoutDashboard },
+  { title: "Order", path: "/Order", icon: ShoppingCart },
   {
     title: "Data",
     icon: Database,
@@ -34,7 +35,7 @@ export const SideBar = () => {
   const { User } = useContext(AuthContext);
   const { isSidebarOpen, setIsSidebarOpen } = useContext(PagesContext);
   const navigate = useNavigate();
-  const [openMenus, setOpenMenus] = useState({}); 
+  const [openMenus, setOpenMenus] = useState({});
   const location = useLocation();
   const userRole = "super_admin";
   const toggleSubmenu = (title) => {
@@ -46,15 +47,15 @@ export const SideBar = () => {
         }`}
     >
       {/* Logo Area */}
-      <div className="h-16 flex items-center px-6 border-b border-border-light">
+      <div className="h-16 flex items-center px-6  border-b border-slate-700 bg-slate-800">
         <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center mr-3 shadow-sm">
           <span className="text-white font-bold text-lg">A</span>
         </div>
-        <span className="text-xl font-bold text-text-heading tracking-wide">Arliva</span>
+        <span className="text-xl font-bold text-white tracking-wide" >Arliva</span>
       </div>
 
       {/* Navigation */}
-      <nav className="p-4 space-y-1 overflow-y-auto h-[calc(100vh-4rem)] hide-scrollbar">
+      <nav className="p-4 space-y-1 overflow-y-auto h-[calc(100vh-4rem)] hide-scrollbar bg-slate-800">
         {MENU_ITEMS.map((item) => {
           const Icon = item.icon;
           const isActive = location.pathname === item.path;
@@ -66,15 +67,15 @@ export const SideBar = () => {
                 // Menu dengan Dropdown
                 <button
                   onClick={() => toggleSubmenu(item.title)}
-                  className="w-full flex items-center justify-between px-3 py-2.5 rounded-lg text-xs md:text-sm  font-medium text-text-body hover:bg-gray-50 hover:text-primary transition-colors group"
+                  className="w-full flex items-center justify-between px-3 py-2.5 rounded-lg text-xs md:text-sm font-medium text-slate-300 hover:bg-slate-700/50 hover:text-white transition-colors group"
                 >
                   <div className="flex items-center space-x-3">
-                    <Icon size={20} className="text-text-muted group-hover:text-primary transition-colors" />
+                    <Icon size={20} className="text-slate-400 group-hover:text-white transition-colors" />
                     <span>{item.title}</span>
                   </div>
                   <ChevronDown
                     size={16}
-                    className={`transition-transform duration-200 ${isDropdownOpen ? "rotate-180 text-primary" : "text-text-muted"}`}
+                    className={`transition-transform duration-200 ${isDropdownOpen ? "rotate-180 text-white" : "text-slate-400"}`}
                   />
                 </button>
               ) : (
@@ -82,17 +83,19 @@ export const SideBar = () => {
                 <Link
                   to={item.path}
                   onClick={() => setIsSidebarOpen(false)} // Tutup sidebar di mobile saat diklik
-                  className={`flex items-center space-x-3 px-3 py-2.5 rounded-lg text-xs md:text-sm font-medium transition-colors group ${isActive ? "bg-primary/10 text-primary" : "text-text-body hover:bg-gray-50 hover:text-primary"
+                  className={`flex items-center space-x-3 px-3 py-2.5 rounded-lg text-xs md:text-sm font-medium transition-colors group ${isActive
+                    ? "bg-primary text-white shadow-sm"
+                    : "text-slate-300 hover:bg-slate-700/50 hover:text-white"
                     }`}
                 >
-                  <Icon size={20} className={isActive ? "text-primary" : "text-text-muted group-hover:text-primary"} />
+                  <Icon size={20} className={isActive ? "text-white" : "text-slate-400 group-hover:text-white"} />
                   <span>{item.title}</span>
                 </Link>
               )}
 
               {/* Submenu Items */}
               {item.subItems && isDropdownOpen && (
-                <div className="ml-9 mt-1 mb-2 space-y-1 border-l-2 border-gray-100 pl-2 animate-in slide-in-from-top-2">
+                <div className="ml-9 mt-1 mb-2 space-y-1 border-l-2 border-slate-700 pl-2 animate-in slide-in-from-top-2">
                   {item.subItems
                     .filter((sub) => !sub.role || sub.role === userRole)
                     .map((sub) => (
@@ -101,8 +104,8 @@ export const SideBar = () => {
                         to={sub.path}
                         onClick={() => setIsSidebarOpen(false)}
                         className={`block px-3 py-2 rounded-md text-xs md:text-sm transition-colors ${location.pathname === sub.path
-                          ? "text-primary font-semibold bg-gray-50"
-                          : "text-text-body hover:text-primary hover:bg-gray-50"
+                          ? "text-white font-semibold bg-slate-700/60"
+                          : "text-slate-400 hover:text-white hover:bg-slate-700/50"
                           }`}
                       >
                         {sub.title}

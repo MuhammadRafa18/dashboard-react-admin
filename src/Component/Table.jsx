@@ -54,8 +54,8 @@ export const Table = ({ colums, Data, filters, page, setPage }) => {
       )}
 
       {/* Table */}
-      <div className="w-full overflow-x-auto ">
-        <table className="w-full text-sm">
+      <div className="w-full overflow-x-auto">
+        <table className="w-full min-w-[760px] text-sm">
           <thead>
             <tr className="bg-gray-50 dark:bg-gray-700 border-b border-gray-100 dark:border-gray-600">
               {colums.map((col) => (
@@ -79,7 +79,7 @@ export const Table = ({ colums, Data, filters, page, setPage }) => {
                   {colums.map((col) => (
                     <td
                       key={col.key}
-                      className="px-4 py-3 text-center text-gray-700 dark:text-gray-300 max-w-[200px] truncate"
+                      className={`px-4 py-3 align-top text-center text-gray-700 dark:text-gray-300 ${col.className || ""}`}
                     >
                       {col.render ? col.render(item, index) : item[col.key]}
                     </td>
@@ -100,11 +100,11 @@ export const Table = ({ colums, Data, filters, page, setPage }) => {
           </tbody>
         </table>
       </div>
-      <div className="flex items-center justify-between px-4 py-3 border-t border-gray-200 dark:border-gray-700">
+      {setPage && Data?.meta && Data?.links && <div className="flex items-center justify-between px-4 py-3 border-t border-gray-200 dark:border-gray-700">
         <button
           onClick={() => setPage((prev) => prev - 1)}
           disabled={!Data?.links?.prev}
-          className="px-4 py-2 rounded-lg border hover:opacity-35 cursor-pointer"
+          className="px-4 py-2 rounded-lg border border-gray-300 text-sm font-medium text-gray-700 transition enabled:hover:bg-gray-50 disabled:cursor-not-allowed disabled:opacity-40"
         >
           Prev
         </button>
@@ -120,7 +120,7 @@ export const Table = ({ colums, Data, filters, page, setPage }) => {
         >
           Next
         </button>
-      </div>
+      </div>}
     </div>
   );
 };
